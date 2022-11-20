@@ -89,6 +89,21 @@ export default function App() {
     }
     // if task is not valid
     else {
+      if (!title) {
+        setTitleError(true);
+      } else {
+        setTitleError(false);
+      }
+      if (tasks.filter((t) => t.title == task.title).length != 0) {
+        setUniqueTitleError(true);
+      } else {
+        setUniqueTitleError(false);
+      }
+      if (!description) {
+        setDescriptionError(true);
+      } else {
+        setDescriptionError(false);
+      }
     }
   }
 
@@ -133,7 +148,7 @@ export default function App() {
           {!update && (
             <TextField
               Title
-              error
+              error={titleError || uniqueTitleError}
               id="outlined-error-helper-text"
               label="Title"
               helperText="Title is Required!"
@@ -145,7 +160,7 @@ export default function App() {
           <br></br>
           <TextField
             Description
-            error
+            error={descriptionError}
             id="outlined-error-helper-text"
             label="Description"
             helperText="Description is Required!"
