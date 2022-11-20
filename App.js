@@ -43,11 +43,11 @@ import 'toastr/build/toastr.css';
 import './style.css';
 
 export default function App() {
-  const [tasks, setTasks] = React.useState([
-    createDataForTable(1, 2, 3, 4, 5, 6),
-  ]);
+  const [tasks, setTasks] = React.useState([]);
 
   const [open, setOpen] = React.useState(false);
+  const [title, setTitle] = React.useState('');
+  const [description, setDescription] = React.useState('');
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -85,33 +85,33 @@ export default function App() {
     <div>
       <Dialog open={open} onClose={handleClose}>
         <DialogContent>
-        <TextField
-          Title
-          id="outlined-required"
-          label= "Title"
-        />
-        <br></br>
-        <br></br>
-        <TextField
-          Description
-          id="outlined-required"
-          label="Description"
-        />
-        <br></br>
-        <br></br>
-        
-        <FormControl>
-          <FormLabel id="demo-row-radio-buttons-group-label">Priority</FormLabel>
-          <RadioGroup row aria-labelledby="demo-row-radio-buttons-group-label" name="row-radio-buttons-group">
-             <FormControlLabel value="High" control={<Radio />} label="High" />
-             <FormControlLabel value="Med" control={<Radio />} label="Med" />
-             <FormControlLabel value="Low" control={<Radio />} label="Low" />
-             </RadioGroup>
-             </FormControl>
-        
+          <TextField Title id="outlined-required" label="Title" onChange={(event) => setTitle(event.target.value)}/>
+          <br></br>
+          <br></br>
+          <TextField Description id="outlined-required" label="Description" onChange={(event) => setDescription(event.target.value)} />
+          <br></br>
+          <br></br>
+          <FormControl>
+            <FormLabel id="demo-row-radio-buttons-group-label">
+              Priority
+            </FormLabel>
+            <RadioGroup
+              row
+              aria-labelledby="demo-row-radio-buttons-group-label"
+              name="row-radio-buttons-group"
+            >
+              <FormControlLabel value="High" control={<Radio />} label="High" />
+              <FormControlLabel value="Med" control={<Radio />} label="Med" />
+              <FormControlLabel value="Low" control={<Radio />} label="Low" />
+            </RadioGroup>
+          </FormControl>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose}>Add</Button>
+          <Button
+            onClick={() => addATask(createDataForTable(title, description, 3, 4, 5, 6))}
+          >
+            Add
+          </Button>
           <Button onClick={handleClose}>Cancel</Button>
         </DialogActions>
       </Dialog>
@@ -132,8 +132,11 @@ export default function App() {
             </Typography>
             <Button
               color="inherit"
-              onClick={() => setOpen(true)}//addATask(createDataForTable(1, 2, 3, 4, 5, 6))}
-            > Add </Button>
+              onClick={() => setOpen(true)} //addATask(createDataForTable(1, 2, 3, 4, 5, 6))}
+            >
+              {' '}
+              Add{' '}
+            </Button>
           </Toolbar>
         </AppBar>
       </Box>
