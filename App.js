@@ -151,7 +151,7 @@ export default function App() {
               error={titleError || uniqueTitleError}
               id="outlined-error-helper-text"
               label="Title"
-              helperText="Title is Required!"
+              helperText={(titleError && "Title is Required!") || (uniqueTitleError && "Title is already used!")}
               onChange={(event) => setTitle(event.target.value)}
               value={title}
             />
@@ -163,7 +163,7 @@ export default function App() {
             error={descriptionError}
             id="outlined-error-helper-text"
             label="Description"
-            helperText="Description is Required!"
+            helperText={descriptionError && "Description is Required!"}
             onChange={(event) => setDescription(event.target.value)}
             value={description}
           />
