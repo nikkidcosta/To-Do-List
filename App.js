@@ -49,7 +49,7 @@ export default function App() {
   const [open, setOpen] = React.useState(false);
   const [title, setTitle] = React.useState('');
   const [description, setDescription] = React.useState('');
-  const [priority, setPriority] = React.useState('');
+  const [priority, setPriority] = React.useState('High');
   const [deadline, setDeadline] = React.useState(moment());
   const [titleError, setTitleError] = React.useState(false);
   const [descriptionError, setDescriptionError] = React.useState(false);
@@ -67,10 +67,10 @@ export default function App() {
     setOpen(false);
   };
 
-  function clearInputs(){
+  function clearInputs() {
     setTitle('');
     setDescription('');
-    setPriority('');
+    setPriority('High');
     setDeadline(moment());
     setTitleError(false);
     setDescriptionError(false);
@@ -138,11 +138,6 @@ export default function App() {
   }
 
   function openTaskAdd() {
-    setDescription('');
-    setPriority('');
-    setDeadline(moment());
-    setUpdate(false);
-    setTitle('');
     setOpen(true);
   }
 
@@ -163,7 +158,10 @@ export default function App() {
               error={titleError || uniqueTitleError}
               id="outlined-error-helper-text"
               label="Title"
-              helperText={(titleError && "Title is Required!") || (uniqueTitleError && "Title is already used!")}
+              helperText={
+                (titleError && 'Title is Required!') ||
+                (uniqueTitleError && 'Title is already used!')
+              }
               onChange={(event) => setTitle(event.target.value)}
               value={title}
             />
@@ -175,7 +173,7 @@ export default function App() {
             error={descriptionError}
             id="outlined-error-helper-text"
             label="Description"
-            helperText={descriptionError && "Description is Required!"}
+            helperText={descriptionError && 'Description is Required!'}
             onChange={(event) => setDescription(event.target.value)}
             value={description}
           />
