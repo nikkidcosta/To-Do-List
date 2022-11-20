@@ -63,8 +63,19 @@ export default function App() {
   };
 
   const handleClose = () => {
+    clearInputs();
     setOpen(false);
   };
+
+  function clearInputs(){
+    setTitle('');
+    setDescription('');
+    setPriority('');
+    setDeadline(moment());
+    setTitleError(false);
+    setDescriptionError(false);
+    setUniqueTitleError(false);
+  }
 
   function createDataForTable(
     title,
@@ -85,6 +96,7 @@ export default function App() {
     ) {
       setTasks((a) => a.concat([task]));
       setOpen(false);
+      clearInputs();
       toastr.success(`Task was added successfully`);
     }
     // if task is not valid
