@@ -38,16 +38,19 @@ import { TimePicker } from '@mui/x-date-pickers/TimePicker';
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
 import { MobileDatePicker } from '@mui/x-date-pickers/MobileDatePicker';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import toastr from 'toastr';
 import 'toastr/build/toastr.css';
 import './style.css';
+import moment from 'moment';
 
 export default function App() {
   const [tasks, setTasks] = React.useState([]);
-
   const [open, setOpen] = React.useState(false);
   const [title, setTitle] = React.useState('');
   const [description, setDescription] = React.useState('');
+  const [priority, setPriority] = React.useState('');
+  const [deadline, setDeadline] = React.useState(moment());
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -70,6 +73,8 @@ export default function App() {
 
   function addATask(task) {
     setTasks((a) => a.concat([task]));
+    setOpen(false);
+    toastr.success(`Task was added successfully`);
   }
 
   function deleteATask(title) {
@@ -77,18 +82,54 @@ export default function App() {
       task.title !== title;
     });
     setTasks(removeItem);
-    toastr.success(`Task deleted`);
+    toastr.success(`Task was deleted successfully`);
   }
 
-  function updateATask(task) {}
+  function updateATask(task) {
+
+  }
+
+  function completeTask(title) {
+    setTasks((a) =>
+      a.map((task) =>
+        task.title == title ? { ...task, isComplete: true } : task
+      )
+    );
+  }
   return (
     <div>
       <Dialog open={open} onClose={handleClose}>
         <DialogContent>
-          <TextField Title id="outlined-required" label="Title" onChange={(event) => setTitle(event.target.value)}/>
+          <TextField
+            Title
+            error
+            id="outlined-error-helper-text"
+            label="Title"
+            helperText= "Title is Required!"
+            onChange={(event) => setTitle(event.target.value)}
+          />
           <br></br>
           <br></br>
-          <TextField Description id="outlined-required" label="Description" onChange={(event) => setDescription(event.target.value)} />
+          <TextField
+            Description
+            error
+            id="outlined-error-helper-text"
+            label="Description"
+            helperText= "Title is Required!"
+            onChange={(event) => setDescription(event.target.value)}
+          />
+          <br></br>
+          <br></br>
+          <LocalizationProvider dateAdapter={AdapterDayjs}>
+            <DatePicker
+              label="Deadline"
+              value={deadline}
+              onChange={(event) => {
+                setDeadline(event);
+              }}
+              renderInput={(params) => <TextField {...params} />}
+            />
+          </LocalizationProvider>
           <br></br>
           <br></br>
           <FormControl>
@@ -99,6 +140,7 @@ export default function App() {
               row
               aria-labelledby="demo-row-radio-buttons-group-label"
               name="row-radio-buttons-group"
+              onChange={(event) => setPriority(event.target.value)}
             >
               <FormControlLabel value="High" control={<Radio />} label="High" />
               <FormControlLabel value="Med" control={<Radio />} label="Med" />
@@ -108,7 +150,17 @@ export default function App() {
         </DialogContent>
         <DialogActions>
           <Button
-            onClick={() => addATask(createDataForTable(title, description, 3, 4, 5, 6))}
+            onClick={() =>
+              addATask(
+                createDataForTable(
+                  title,
+                  description,
+                  deadline.format('MM/DD/YYYY'),
+                  priority,
+                  false
+                )
+              )
+            }
           >
             Add
           </Button>
@@ -166,20 +218,24 @@ export default function App() {
                 <TableCell align="right">{task.priority}</TableCell>
                 <TableCell align="right">
                   <Checkbox
-                    defaultChecked
                     color="default"
-                    inputProps={{ 'aria-label': 'checkbox with default color' }}
+                    inputProps={{
+                      'aria-label': 'checkbox with default color',
+                    }}
+                    onChange={() => completeTask(task.title)}
                   />
                 </TableCell>
                 <TableCell align="right">
-                  <Button
-                    color="inherit"
-                    onClick={() =>
-                      updateATask(createDataForTable(1, 2, 3, 4, 5, 6))
-                    }
-                  >
-                    Update
-                  </Button>
+                  {!task.isComplete && (
+                    <Button
+                      color="inherit"
+                      onClick={() =>
+                        updateATask(createDataForTable(1, 2, 3, 4, 5, 6))
+                      }
+                    >
+                      Update
+                    </Button>
+                  )}
                   <br></br>
                   <Button
                     color="inherit"
