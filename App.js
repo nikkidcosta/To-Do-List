@@ -51,6 +51,8 @@ export default function App() {
   const [description, setDescription] = React.useState('');
   const [priority, setPriority] = React.useState('');
   const [deadline, setDeadline] = React.useState(moment());
+  // false = add, true = update
+  const [update, setUpdate] = React.useState(false);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -85,14 +87,15 @@ export default function App() {
     toastr.success(`Task was deleted successfully`);
   }
 
-  function updateATask(task) {}
+  function updateATask(task) {
+  }
 
   function openTaskUpdate(title) {
     let task = tasks.find((task) => task.title == title);
     setDescription(task.description);
-    setTitle(task.title);
     setPriority(task.priority);
     setDeadline(task.deadline);
+    setUpdate(true);
     setOpen(true);
   }
 
@@ -107,6 +110,7 @@ export default function App() {
     <div>
       <Dialog open={open} onClose={handleClose}>
         <DialogContent>
+          {!update && 
           <TextField
             Title
             error
@@ -115,7 +119,7 @@ export default function App() {
             helperText="Title is Required!"
             onChange={(event) => setTitle(event.target.value)}
             value={title}
-          />
+          />}
           <br></br>
           <br></br>
           <TextField
@@ -123,7 +127,7 @@ export default function App() {
             error
             id="outlined-error-helper-text"
             label="Description"
-            helperText="Title is Required!"
+            helperText="Description is Required!"
             onChange={(event) => setDescription(event.target.value)}
             value={description}
           />
