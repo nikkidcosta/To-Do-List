@@ -51,6 +51,10 @@ export default function App() {
   const [description, setDescription] = React.useState('');
   const [priority, setPriority] = React.useState('');
   const [deadline, setDeadline] = React.useState(moment());
+  const [titleError, setTitleError] = React.useState(false);
+  const [descriptionError, setDescriptionError] = React.useState(false);
+  const [uniqueTitleError, setUniqueTitleError] = React.useState(false);
+
   // false = add, true = update
   const [update, setUpdate] = React.useState(false);
 
@@ -74,9 +78,18 @@ export default function App() {
   }
 
   function addATask(task) {
-    setTasks((a) => a.concat([task]));
-    setOpen(false);
-    toastr.success(`Task was added successfully`);
+    if (
+      description &&
+      title &&
+      tasks.filter((t) => t.title == task.title).length == 0
+    ) {
+      setTasks((a) => a.concat([task]));
+      setOpen(false);
+      toastr.success(`Task was added successfully`);
+    }
+    // if task is not valid
+    else {
+    }
   }
 
   function deleteATask(title) {
@@ -85,9 +98,6 @@ export default function App() {
     });
     setTasks(removeItem);
     toastr.success(`Task was deleted successfully`);
-  }
-
-  function updateATask(task) {
   }
 
   function openTaskUpdate(title) {
@@ -100,7 +110,7 @@ export default function App() {
     setOpen(true);
   }
 
-  function openTaskAdd(){
+  function openTaskAdd() {
     setDescription('');
     setPriority('');
     setDeadline(moment());
@@ -120,16 +130,17 @@ export default function App() {
     <div>
       <Dialog open={open} onClose={handleClose}>
         <DialogContent>
-          {!update && 
-          <TextField
-            Title
-            error
-            id="outlined-error-helper-text"
-            label="Title"
-            helperText="Title is Required!"
-            onChange={(event) => setTitle(event.target.value)}
-            value={title}
-          />}
+          {!update && (
+            <TextField
+              Title
+              error
+              id="outlined-error-helper-text"
+              label="Title"
+              helperText="Title is Required!"
+              onChange={(event) => setTitle(event.target.value)}
+              value={title}
+            />
+          )}
           <br></br>
           <br></br>
           <TextField
@@ -206,10 +217,7 @@ export default function App() {
             <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
               FRAMEWORKS
             </Typography>
-            <Button
-              color="inherit"
-              onClick={() => openTaskAdd()} //addATask(createDataForTable(1, 2, 3, 4, 5, 6))}
-            >
+            <Button color="inherit" onClick={() => openTaskAdd()}>
               {' '}
               Add{' '}
             </Button>
