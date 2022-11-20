@@ -89,7 +89,10 @@ export default function App() {
   }
 
   function addATask(task) {
-    if (
+    console.log(task.deadline);
+    console.log(update);
+    console.log(description);
+    if (!update &&
       description &&
       title &&
       tasks.filter((t) => t.title == task.title).length == 0
@@ -98,6 +101,17 @@ export default function App() {
       setOpen(false);
       clearInputs();
       toastr.success(`Task was added successfully`);
+    }
+    else if (update && description){
+      let taskToUpdate = tasks.find((t) => t.title == task.title);
+      taskToUpdate.description = task.description;
+      taskToUpdate.title = task.title;
+      taskToUpdate.deadline = task.deadline;
+      taskToUpdate.priority = task.priority;
+      clearInputs();
+      toastr.success("Task was updated successfully!");
+      setOpen(false);
+      //setTasks((a) => (a.title == task.title ? task : a));
     }
     // if task is not valid
     else {
@@ -131,7 +145,7 @@ export default function App() {
     let task = tasks.find((task) => task.title == title);
     setDescription(task.description);
     setPriority(task.priority);
-    setDeadline(task.deadline);
+    setDeadline(moment(task.deadline));
     setUpdate(true);
     setTitle(title);
     setOpen(true);
@@ -147,6 +161,10 @@ export default function App() {
         task.title == title ? { ...task, isComplete: true } : task
       )
     );
+  }
+
+  function updateTask(task) {
+    addATask(createDataForTable(task.description, task.deadline, task.priority));
   }
   return (
     <div>
@@ -222,7 +240,8 @@ export default function App() {
               )
             }
           >
-            Add
+            {update && "Edit"}
+            {!update && "Add"}
           </Button>
           <Button onClick={handleClose}>Cancel</Button>
         </DialogActions>
