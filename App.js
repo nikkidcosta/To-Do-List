@@ -85,8 +85,15 @@ export default function App() {
     toastr.success(`Task was deleted successfully`);
   }
 
-  function updateATask(task) {
+  function updateATask(task) {}
 
+  function openTaskUpdate(title) {
+    let task = tasks.find((task) => task.title == title);
+    setDescription(task.description);
+    setTitle(task.title);
+    setPriority(task.priority);
+    setDeadline(task.deadline);
+    setOpen(true);
   }
 
   function completeTask(title) {
@@ -105,8 +112,9 @@ export default function App() {
             error
             id="outlined-error-helper-text"
             label="Title"
-            helperText= "Title is Required!"
+            helperText="Title is Required!"
             onChange={(event) => setTitle(event.target.value)}
+            value={title}
           />
           <br></br>
           <br></br>
@@ -115,8 +123,9 @@ export default function App() {
             error
             id="outlined-error-helper-text"
             label="Description"
-            helperText= "Title is Required!"
+            helperText="Title is Required!"
             onChange={(event) => setDescription(event.target.value)}
+            value={description}
           />
           <br></br>
           <br></br>
@@ -141,6 +150,7 @@ export default function App() {
               aria-labelledby="demo-row-radio-buttons-group-label"
               name="row-radio-buttons-group"
               onChange={(event) => setPriority(event.target.value)}
+              value={priority}
             >
               <FormControlLabel value="High" control={<Radio />} label="High" />
               <FormControlLabel value="Med" control={<Radio />} label="Med" />
@@ -229,9 +239,7 @@ export default function App() {
                   {!task.isComplete && (
                     <Button
                       color="inherit"
-                      onClick={() =>
-                        updateATask(createDataForTable(1, 2, 3, 4, 5, 6))
-                      }
+                      onClick={() => openTaskUpdate(task.title)}
                     >
                       Update
                     </Button>
