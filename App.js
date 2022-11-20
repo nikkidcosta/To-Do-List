@@ -96,6 +96,16 @@ export default function App() {
     setPriority(task.priority);
     setDeadline(task.deadline);
     setUpdate(true);
+    setTitle(title);
+    setOpen(true);
+  }
+
+  function openTaskAdd(){
+    setDescription('');
+    setPriority('');
+    setDeadline(moment());
+    setUpdate(false);
+    setTitle('');
     setOpen(true);
   }
 
@@ -198,7 +208,7 @@ export default function App() {
             </Typography>
             <Button
               color="inherit"
-              onClick={() => setOpen(true)} //addATask(createDataForTable(1, 2, 3, 4, 5, 6))}
+              onClick={() => openTaskAdd()} //addATask(createDataForTable(1, 2, 3, 4, 5, 6))}
             >
               {' '}
               Add{' '}
