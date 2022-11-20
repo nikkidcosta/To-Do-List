@@ -18,12 +18,44 @@ import AppBar from '@mui/material/AppBar';
 import Button from '@mui/material/Button';
 import MenuIcon from '@mui/icons-material/Menu';
 import Checkbox from '@mui/material/Checkbox';
+import TextField from '@mui/material/TextField';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+import Radio from '@mui/material/Radio';
+import RadioGroup from '@mui/material/RadioGroup';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import FormControl from '@mui/material/FormControl';
+import FormLabel from '@mui/material/FormLabel';
+import dayjs from 'dayjs';
+import Stack from '@mui/material/Stack';
+import TextField from '@mui/material/TextField';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { TimePicker } from '@mui/x-date-pickers/TimePicker';
+import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
+import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
+import { MobileDatePicker } from '@mui/x-date-pickers/MobileDatePicker';
+import toastr from 'toastr';
+import 'toastr/build/toastr.css';
 import './style.css';
 
 export default function App() {
   const [tasks, setTasks] = React.useState([
     createDataForTable(1, 2, 3, 4, 5, 6),
   ]);
+
+  const [open, setOpen] = React.useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   function createDataForTable(
     title,
@@ -45,11 +77,44 @@ export default function App() {
       task.title !== title;
     });
     setTasks(removeItem);
+    toastr.success(`Task deleted`);
   }
 
   function updateATask(task) {}
   return (
     <div>
+      <Dialog open={open} onClose={handleClose}>
+        <DialogContent>
+        <TextField
+          Title
+          id="outlined-required"
+          label= "Title"
+        />
+        <br></br>
+        <br></br>
+        <TextField
+          Description
+          id="outlined-required"
+          label="Description"
+        />
+        <br></br>
+        <br></br>
+        
+        <FormControl>
+          <FormLabel id="demo-row-radio-buttons-group-label">Priority</FormLabel>
+          <RadioGroup row aria-labelledby="demo-row-radio-buttons-group-label" name="row-radio-buttons-group">
+             <FormControlLabel value="High" control={<Radio />} label="High" />
+             <FormControlLabel value="Med" control={<Radio />} label="Med" />
+             <FormControlLabel value="Low" control={<Radio />} label="Low" />
+             </RadioGroup>
+             </FormControl>
+        
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose}>Add</Button>
+          <Button onClick={handleClose}>Cancel</Button>
+        </DialogActions>
+      </Dialog>
       <Box sx={{ flexGrow: 1 }}>
         <AppBar position="static">
           <Toolbar>
@@ -67,10 +132,8 @@ export default function App() {
             </Typography>
             <Button
               color="inherit"
-              onClick={() => addATask(createDataForTable(1, 2, 3, 4, 5, 6))}
-            >
-              Add
-            </Button>
+              onClick={() => setOpen(true)}//addATask(createDataForTable(1, 2, 3, 4, 5, 6))}
+            > Add </Button>
           </Toolbar>
         </AppBar>
       </Box>
