@@ -95,8 +95,9 @@ export default function App() {
   function addATask(task) {
     //console.log(task.deadline);
     //console.log(update);
-   // console.log(description);
-    if (!update &&
+    // console.log(description);
+    if (
+      !update &&
       description &&
       title &&
       tasks.filter((t) => t.title == task.title).length == 0
@@ -105,15 +106,14 @@ export default function App() {
       setOpen(false);
       clearInputs();
       toastr.success(`Task was added successfully`);
-    }
-    else if (update && description){
+    } else if (update && description) {
       let taskToUpdate = tasks.find((t) => t.title == task.title);
       taskToUpdate.description = task.description;
       taskToUpdate.title = task.title;
       taskToUpdate.deadline = task.deadline;
       taskToUpdate.priority = task.priority;
       clearInputs();
-      toastr.success("Task was updated successfully!");
+      toastr.success('Task was updated successfully!');
       setOpen(false);
       //setTasks((a) => (a.title == task.title ? task : a));
     }
@@ -169,20 +169,21 @@ export default function App() {
   }
 
   function updateTask(task) {
-    addATask(createDataForTable(task.description, task.deadline, task.priority));
+    addATask(
+      createDataForTable(task.description, task.deadline, task.priority)
+    );
   }
   return (
     <div>
       <Dialog open={open} onClose={handleClose}>
         <DialogContent>
-        <AppBar sx={{ position: 'absolute' }} fullWidth>
+          <AppBar sx={{ position: 'absolute' }} fullWidth>
             <Toolbar>
-              {!update && 
-              <AddCircleIcon />}
-              {update && <BorderColorIcon/>}
+              {!update && <AddCircleIcon />}
+              {update && <BorderColorIcon />}
               <Typography variant="h6" component="div">
-                {!update && "Add Task"}
-                {update && "Edit Task"}
+                {!update && 'Add Task'}
+                {update && 'Edit Task'}
               </Typography>
             </Toolbar>
           </AppBar>
@@ -220,7 +221,7 @@ export default function App() {
           <br></br>
           <LocalizationProvider dateAdapter={AdapterDayjs}>
             <DatePicker
-            fullWidth
+              fullWidth
               label="Deadline"
               value={deadline}
               onChange={(event) => {
@@ -249,8 +250,7 @@ export default function App() {
           </FormControl>
         </DialogContent>
         <DialogActions>
-          <Button
-          
+          <Button variant="contained"
             onClick={() =>
               addATask(
                 createDataForTable(
@@ -263,12 +263,15 @@ export default function App() {
               )
             }
           >
-            {update && <BorderColorIcon/>}
-            {update && "Edit"}
-            {!update && <AddCircleIcon/>}
-            {!update && "Add"}
+            {update && <BorderColorIcon />}
+            {update && 'Edit'}
+            {!update && <AddCircleIcon />}
+            {!update && 'Add'}
           </Button>
-          <Button onClick={handleClose}> <DoNotDisturbIcon /> Cancel</Button>
+          <Button color="error" variant="contained" onClick={handleClose}>
+            {' '}
+            <DoNotDisturbIcon /> Cancel
+          </Button>
         </DialogActions>
       </Dialog>
       <Box sx={{ flexGrow: 1 }}>
@@ -286,8 +289,12 @@ export default function App() {
             <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
               FRAMEWORKS
             </Typography>
-            <IconButton aria-label="add" color="inherit" onClick={() => openTaskAdd()}>
-              <AddCircleIcon/>
+            <IconButton
+              aria-label="add"
+              color="inherit"
+              onClick={() => openTaskAdd()}
+            >
+              <AddCircleIcon />
               ADD
             </IconButton>
             {/*}
@@ -334,16 +341,17 @@ export default function App() {
                 <TableCell align="right">
                   {!task.isComplete && (
                     <Button
-                      color="inherit"
+                    variant="contained"
+                      color="primary"
                       onClick={() => openTaskUpdate(task.title)}
                     >
-                      <BorderColorIcon/>
+                      <BorderColorIcon />
                       Update
                     </Button>
                   )}
                   <br></br>
-                  <Button
-                    color="inherit"
+                  <Button variant="contained"
+                    color="error"
                     onClick={() => deleteATask(task.title)}
                   >
                     <DoNotDisturbIcon />
