@@ -246,6 +246,7 @@ export default function App() {
         </DialogContent>
         <DialogActions>
           <Button
+          
             onClick={() =>
               addATask(
                 createDataForTable(
@@ -258,10 +259,12 @@ export default function App() {
               )
             }
           >
+            {update && <BorderColorIcon/>}
             {update && "Edit"}
+            {!update && <AddCircleIcon/>}
             {!update && "Add"}
           </Button>
-          <Button onClick={handleClose}>Cancel</Button>
+          <Button onClick={handleClose}> <DoNotDisturbIcon /> Cancel</Button>
         </DialogActions>
       </Dialog>
       <Box sx={{ flexGrow: 1 }}>
