@@ -27,6 +27,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
+import DoNotDisturbIcon from '@mui/icons-material/DoDisturb';
 import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
 import dayjs from 'dayjs';
@@ -329,6 +330,7 @@ export default function App() {
                       color="inherit"
                       onClick={() => openTaskUpdate(task.title)}
                     >
+                      <BorderColorIcon/>
                       Update
                     </Button>
                   )}
@@ -337,6 +339,7 @@ export default function App() {
                     color="inherit"
                     onClick={() => deleteATask(task.title)}
                   >
+                    <DoNotDisturbIcon />
                     Delete
                   </Button>
                 </TableCell>
