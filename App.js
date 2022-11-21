@@ -176,9 +176,12 @@ export default function App() {
         <DialogContent>
         <AppBar sx={{ position: 'absolute' }} fullWidth>
             <Toolbar>
-              <AddCircleIcon />
+              {!update && 
+              <AddCircleIcon />}
+              {update && <BorderColorIcon/>}
               <Typography variant="h6" component="div">
-                Add Task
+                {!update && "Add Task"}
+                {update && "Edit Task"}
               </Typography>
             </Toolbar>
           </AppBar>
