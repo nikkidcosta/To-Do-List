@@ -157,6 +157,7 @@ export default function App() {
 
   function openTaskAdd() {
     setOpen(true);
+    setUpdate(false);
   }
 
   function completeTask(title) {
