@@ -43,6 +43,9 @@ import toastr from 'toastr';
 import 'toastr/build/toastr.css';
 import './style.css';
 import moment from 'moment';
+import Button from '@mui/material/Button';
+import AddCircleIcon from '@mui/icons-material/AddCircle';
+import BorderColorIcon from '@mui/icons-material/BorderColor';
 
 export default function App() {
   const [tasks, setTasks] = React.useState([]);
@@ -89,9 +92,9 @@ export default function App() {
   }
 
   function addATask(task) {
-    console.log(task.deadline);
-    console.log(update);
-    console.log(description);
+    //console.log(task.deadline);
+    //console.log(update);
+   // console.log(description);
     if (!update &&
       description &&
       title &&
@@ -170,9 +173,21 @@ export default function App() {
     <div>
       <Dialog open={open} onClose={handleClose}>
         <DialogContent>
+        <AppBar sx={{ position: 'absolute' }} fullWidth>
+            <Toolbar>
+              <AddCircleIcon />
+              <Typography variant="h6" component="div">
+                Add Task
+              </Typography>
+            </Toolbar>
+          </AppBar>
+          <br></br>
+          <br></br>
+          <br></br>
           {!update && (
             <TextField
               Title
+              fullWidth
               error={titleError || uniqueTitleError}
               id="outlined-error-helper-text"
               label="Title"
@@ -188,6 +203,7 @@ export default function App() {
           <br></br>
           <TextField
             Description
+            fullWidth
             error={descriptionError}
             id="outlined-error-helper-text"
             label="Description"
@@ -199,6 +215,7 @@ export default function App() {
           <br></br>
           <LocalizationProvider dateAdapter={AdapterDayjs}>
             <DatePicker
+            fullWidth
               label="Deadline"
               value={deadline}
               onChange={(event) => {
@@ -261,10 +278,15 @@ export default function App() {
             <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
               FRAMEWORKS
             </Typography>
-            <Button color="inherit" onClick={() => openTaskAdd()}>
+            <IconButton aria-label="add" color="inherit" onClick={() => openTaskAdd()}>
+              <AddCircleIcon/>
+              ADD
+            </IconButton>
+            {/*}
+            <Button color="inherit" variant="contained" onClick={() => openTaskAdd()}>
               {' '}
               Add{' '}
-            </Button>
+          </Button>*/}
           </Toolbar>
         </AppBar>
       </Box>
