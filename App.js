@@ -138,10 +138,7 @@ export default function App() {
   }
 
   function deleteATask(title) {
-    const removeItem = tasks.filter((task) => {
-      task.title !== title;
-    });
-    setTasks(removeItem);
+    setTasks((a) => a.filter((task) => task.title != title));
     toastr.success(`Task was deleted successfully`);
   }
 
