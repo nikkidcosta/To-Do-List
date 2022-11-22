@@ -250,7 +250,8 @@ export default function App() {
           </FormControl>
         </DialogContent>
         <DialogActions>
-          <Button variant="contained"
+          <Button
+            variant="contained"
             onClick={() =>
               addATask(
                 createDataForTable(
@@ -277,16 +278,19 @@ export default function App() {
       <Box sx={{ flexGrow: 1 }}>
         <AppBar position="static">
           <Toolbar>
-            <IconButton
-              size="large"
-              edge="start"
-              color="inherit"
-              aria-label="menu"
-              sx={{ mr: 52 }}
+            <Typography
+              variant="h6"
+              component="div"
+              sx={{ flexGrow: 1, textAlign: 'center' }}
             >
-              <MenuIcon />
-            </IconButton>
-            <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+              <IconButton
+                size="large"
+                edge="start"
+                color="inherit"
+                aria-label="menu"
+              >
+                <MenuIcon />
+              </IconButton>
               FRAMEWORKS
             </Typography>
             <IconButton
@@ -341,7 +345,7 @@ export default function App() {
                 <TableCell align="right">
                   {!task.isComplete && (
                     <Button
-                    variant="contained"
+                      variant="contained"
                       color="primary"
                       onClick={() => openTaskUpdate(task.title)}
                     >
@@ -350,7 +354,8 @@ export default function App() {
                     </Button>
                   )}
                   <br></br>
-                  <Button variant="contained"
+                  <Button
+                    variant="contained"
                     color="error"
                     onClick={() => deleteATask(task.title)}
                   >
